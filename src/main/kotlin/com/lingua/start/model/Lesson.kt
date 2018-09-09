@@ -1,19 +1,22 @@
 package com.lingua.start.model
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import com.fasterxml.jackson.annotation.JsonManagedReference
+import javax.persistence.*
 import javax.validation.constraints.NotBlank
 
 @Entity
-data class Lesson (
+data class Lesson(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
 
-        @get: NotBlank
+        @get: NotBlank(message = "Please provide lesson's title")
         val title: String = "",
 
-        @get: NotBlank
-        val logo: String = ""
+        @get: NotBlank(message = "Please provide lesson's image")
+        val imageUrl: String = "",
+
+        @JsonManagedReference
+        @OneToMany(mappedBy = "lesson", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
+        var words: List<Word>? = null
 )
+

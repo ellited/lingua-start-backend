@@ -34,7 +34,7 @@ class LessonController(private val lessonRepository: LessonRepository) {
 
         return lessonRepository.findById(lessonId).map { existingLesson ->
             val updatedLesson: Lesson = existingLesson
-                    .copy(title = newLesson.title, logo = newLesson.logo)
+                    .copy(title = newLesson.title, imageUrl = newLesson.imageUrl)
             ResponseEntity.ok().body(lessonRepository.save(updatedLesson))
         }.orElse(ResponseEntity.notFound().build())
 
