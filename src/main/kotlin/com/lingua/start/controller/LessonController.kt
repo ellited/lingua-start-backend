@@ -41,7 +41,7 @@ class LessonController(private val lessonRepository: LessonRepository) {
     }
 
     @DeleteMapping("/lessons/{id}")
-    fun deleteArticleById(@PathVariable(value = "id") lessonId: Long): ResponseEntity<Void> {
+    fun deleteLessonById(@PathVariable(value = "id") lessonId: Long): ResponseEntity<Void> {
 
         return lessonRepository.findById(lessonId).map { lesson  ->
             lessonRepository.delete(lesson)
