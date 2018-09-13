@@ -13,8 +13,7 @@ import javax.validation.Valid
 class WordController(private val wordRepository: WordRepository) {
 
     @GetMapping("/words")
-    fun getAllWords(): List<Word> =
-            wordRepository.findAll()
+    fun getAllWords(): List<Word> = wordRepository.findAll()
 
     @PostMapping("/words")
     fun createNewWord(@Valid @RequestBody word: Word): Word? = wordRepository.save(word)
