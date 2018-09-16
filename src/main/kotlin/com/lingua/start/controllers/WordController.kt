@@ -1,7 +1,7 @@
-package com.lingua.start.controller
+package com.lingua.start.controllers
 
-import com.lingua.start.model.Word
-import com.lingua.start.repository.WordRepository
+import com.lingua.start.models.Word
+import com.lingua.start.repositories.WordRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

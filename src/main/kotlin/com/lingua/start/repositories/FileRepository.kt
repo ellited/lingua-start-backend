@@ -1,6 +1,6 @@
-package com.lingua.start.repository
+package com.lingua.start.repositories
 
-import com.lingua.start.model.File
+import com.lingua.start.models.File
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

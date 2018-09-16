@@ -1,4 +1,4 @@
-package com.lingua.start.model
+package com.lingua.start.models
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import javax.persistence.*
@@ -15,5 +15,5 @@ data class File(
         var word: Word? = null,
 
         @get: NotBlank(message = "Please provide files's name")
-        val name: String = ""
+        var name: String = ""
 )

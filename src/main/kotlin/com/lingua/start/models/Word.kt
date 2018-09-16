@@ -1,4 +1,4 @@
-package com.lingua.start.model
+package com.lingua.start.models
 
 import com.fasterxml.jackson.annotation.*
 import javax.persistence.*

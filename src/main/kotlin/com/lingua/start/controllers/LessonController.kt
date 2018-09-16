@@ -1,7 +1,7 @@
-package com.lingua.start.controller
+package com.lingua.start.controllers
 
-import com.lingua.start.model.Lesson
-import com.lingua.start.repository.LessonRepository
+import com.lingua.start.models.Lesson
+import com.lingua.start.repositories.LessonRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
