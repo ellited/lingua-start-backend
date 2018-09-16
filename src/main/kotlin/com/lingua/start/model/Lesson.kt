@@ -16,7 +16,7 @@ data class Lesson(
         val imageUrl: String = "",
 
         @JsonManagedReference
-        @OneToMany(mappedBy = "lesson", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
+        @OneToMany(mappedBy = "lesson", cascade = [CascadeType.REMOVE], fetch = FetchType.EAGER, orphanRemoval = true)
         var words: List<Word>? = null
 )
 

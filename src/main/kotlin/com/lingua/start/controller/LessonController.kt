@@ -9,21 +9,21 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api")
-class LessonController(private val lessonRepository: LessonRepository) {
+class LessonController(private val repository: LessonRepository) {
 
     @GetMapping("/lessons")
-    fun getAllArticles(): List<Lesson> =
-            lessonRepository.findAll()
+    fun getAllLessons(): List<Lesson> =
+            repository.findAll()
 
 
     @PostMapping("/lessons")
-    fun createNewArticle(@Valid @RequestBody lesson: Lesson): Lesson =
-            lessonRepository.save(lesson)
+    fun createNewLesson(@Valid @RequestBody lesson: Lesson): Lesson =
+            repository.save(lesson)
 
 
     @GetMapping("/lessons/{id}")
     fun getLessonById(@PathVariable(value = "id") lessonId: Long): ResponseEntity<Lesson> {
-        return lessonRepository.findById(lessonId).map { lesson ->
+        return repository.findById(lessonId).map { lesson ->
             ResponseEntity.ok(lesson)
         }.orElse(ResponseEntity.notFound().build())
     }
@@ -32,10 +32,10 @@ class LessonController(private val lessonRepository: LessonRepository) {
     fun updateLessonById(@PathVariable(value = "id") lessonId: Long,
                           @Valid @RequestBody newLesson: Lesson): ResponseEntity<Lesson> {
 
-        return lessonRepository.findById(lessonId).map { existingLesson ->
+        return repository.findById(lessonId).map { existingLesson ->
             val updatedLesson: Lesson = existingLesson
                     .copy(title = newLesson.title, imageUrl = newLesson.imageUrl)
-            ResponseEntity.ok().body(lessonRepository.save(updatedLesson))
+            ResponseEntity.ok().body(repository.save(updatedLesson))
         }.orElse(ResponseEntity.notFound().build())
 
     }
@@ -43,8 +43,8 @@ class LessonController(private val lessonRepository: LessonRepository) {
     @DeleteMapping("/lessons/{id}")
     fun deleteLessonById(@PathVariable(value = "id") lessonId: Long): ResponseEntity<Void> {
 
-        return lessonRepository.findById(lessonId).map { lesson  ->
-            lessonRepository.delete(lesson)
+        return repository.findById(lessonId).map { lesson  ->
+            repository.delete(lesson)
             ResponseEntity<Void>(HttpStatus.OK)
         }.orElse(ResponseEntity.notFound().build())
     }
