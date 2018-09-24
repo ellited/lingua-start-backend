@@ -5,9 +5,17 @@ spring:
     url: jdbc:mysql://localhost:3306/${DATABASE_NAME}?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
     username: ${DATABASE_USER}
     password: ${DATABASE_PASSWORD}
+    platform: h2
   servlet:
     multipart:
       enabled: true
       file-size-threshold: 2KB
       max-file-size: 200MB
       max-request-size: 215MB
+security:
+  oauth2:
+    client:
+      client-id: foo
+      client-secret: bar
+    authorization:
+      checkTokenAccess: isAuthenticated()

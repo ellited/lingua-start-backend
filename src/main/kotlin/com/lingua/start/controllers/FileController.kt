@@ -10,9 +10,9 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import java.util.*
 import javax.validation.Valid
 
 @RestController
@@ -22,6 +22,7 @@ class FileController(private val repository: FileRepository, private val wordRep
     @Autowired
     lateinit var fileStorage: FileStorage
 
+    @PreAuthorize("#oauth2.hasScope('read')")
     @GetMapping("/files/{filename}")
     fun downloadFile(@PathVariable filename: String): ResponseEntity<Resource> {
         val file = fileStorage.loadFile(filename)
@@ -32,6 +33,7 @@ class FileController(private val repository: FileRepository, private val wordRep
                 .body(file)
     }
 
+    @PreAuthorize("#oauth2.hasScope('write')")
     @PostMapping("/files")
     fun createNewFile(@Valid
                       @RequestParam("uploadfile") file: MultipartFile,
@@ -45,6 +47,7 @@ class FileController(private val repository: FileRepository, private val wordRep
         return ResponseEntity.ok().body(repository.save(fileModel))
     }
 
+    @PreAuthorize("#oauth2.hasScope('write')")
     @DeleteMapping("/files/{id}")
     fun deleteFileById(@PathVariable(value = "id") id: Long): ResponseEntity<Void> {
 

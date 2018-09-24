@@ -4,6 +4,7 @@ import com.lingua.start.models.Lesson
 import com.lingua.start.repositories.LessonRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -11,16 +12,19 @@ import javax.validation.Valid
 @RequestMapping("/api")
 class LessonController(private val repository: LessonRepository) {
 
+    @PreAuthorize("#oauth2.hasScope('read')")
     @GetMapping("/lessons")
     fun getAllLessons(): List<Lesson> =
             repository.findAll()
 
 
+    @PreAuthorize("#oauth2.hasScope('write')")
     @PostMapping("/lessons")
     fun createNewLesson(@Valid @RequestBody lesson: Lesson): Lesson =
             repository.save(lesson)
 
 
+    @PreAuthorize("#oauth2.hasScope('read')")
     @GetMapping("/lessons/{id}")
     fun getLessonById(@PathVariable(value = "id") lessonId: Long): ResponseEntity<Lesson> {
         return repository.findById(lessonId).map { lesson ->
@@ -28,6 +32,7 @@ class LessonController(private val repository: LessonRepository) {
         }.orElse(ResponseEntity.notFound().build())
     }
 
+    @PreAuthorize("#oauth2.hasScope('write')")
     @PutMapping("/lessons/{id}")
     fun updateLessonById(@PathVariable(value = "id") lessonId: Long,
                           @Valid @RequestBody newLesson: Lesson): ResponseEntity<Lesson> {
@@ -40,6 +45,7 @@ class LessonController(private val repository: LessonRepository) {
 
     }
 
+    @PreAuthorize("#oauth2.hasScope('write')")
     @DeleteMapping("/lessons/{id}")
     fun deleteLessonById(@PathVariable(value = "id") lessonId: Long): ResponseEntity<Void> {
 
