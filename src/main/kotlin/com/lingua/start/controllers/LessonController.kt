@@ -12,7 +12,7 @@ import javax.validation.Valid
 @RequestMapping("/api")
 class LessonController(private val repository: LessonRepository) {
 
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasAnyScopeMatching('read', 'write')")
     @GetMapping("/lessons")
     fun getAllLessons(): List<Lesson> =
             repository.findAll()
@@ -24,7 +24,7 @@ class LessonController(private val repository: LessonRepository) {
             repository.save(lesson)
 
 
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasAnyScopeMatching('read', 'write')")
     @GetMapping("/lessons/{id}")
     fun getLessonById(@PathVariable(value = "id") lessonId: Long): ResponseEntity<Lesson> {
         return repository.findById(lessonId).map { lesson ->

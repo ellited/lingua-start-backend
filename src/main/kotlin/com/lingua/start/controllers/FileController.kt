@@ -22,7 +22,7 @@ class FileController(private val repository: FileRepository, private val wordRep
     @Autowired
     lateinit var fileStorage: FileStorage
 
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasAnyScopeMatching('read', 'write')")
     @GetMapping("/files/{filename}")
     fun downloadFile(@PathVariable filename: String): ResponseEntity<Resource> {
         val file = fileStorage.loadFile(filename)

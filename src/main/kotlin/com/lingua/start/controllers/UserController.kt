@@ -10,7 +10,7 @@ import javax.validation.Valid
 @RequestMapping("/api")
 class UserController(private val repository: UserRepository) {
 
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasScope('write')")
     @GetMapping("/users")
     fun getAllUsers(): List<UserModel> = repository.findAll()
 

@@ -12,7 +12,7 @@ import javax.validation.Valid
 @RequestMapping("/api")
 class WordController(private val repository: WordRepository) {
 
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasAnyScopeMatching('read', 'write')")
     @GetMapping("/words")
     fun getAllWords(): List<Word> = repository.findAll()
 
@@ -20,7 +20,7 @@ class WordController(private val repository: WordRepository) {
     @PostMapping("/words")
     fun createNewWord(@Valid @RequestBody word: Word): Word? = repository.save(word)
 
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasAnyScopeMatching('read', 'write')")
     @GetMapping("/words/{id}")
     fun getWordById(@PathVariable(value = "id") wordId: Long): ResponseEntity<Word> {
         return repository.findById(wordId).map { word ->
