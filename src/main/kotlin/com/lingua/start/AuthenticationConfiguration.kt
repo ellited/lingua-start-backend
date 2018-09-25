@@ -1,52 +1,37 @@
 package com.lingua.start
+
+import com.lingua.start.models.UserModel
+import com.lingua.start.repositories.UserRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.core.userdetails.UserDetails
-import java.util.ArrayList
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
-import java.util.logging.Logger
 
 
 @Configuration
-class AuthenticationConfiguration: UserDetailsService {
+class AuthenticationConfiguration : UserDetailsService {
+
+    @Autowired
+    private val userRepository: UserRepository? = null
 
     override fun loadUserByUsername(username: String?): UserDetails {
+        val user = userRepository?.findByUsername(username!!)
+                ?: throw UsernameNotFoundException("UserModel not found by name: $username")
 
-        if (users.count() == 0) {
-            MyUserDetailsService()
-        }
-        val user = users.stream()
-                .filter { u -> u.name == username }
-                .findAny()
-        if (!user.isPresent) {
-            throw UsernameNotFoundException("User not found by name: $username")
-        }
-        return toUserDetails(user.get())
+        return toUserDetails(user)
     }
 
-    private val users = ArrayList<UserObject>()
 
-    fun MyUserDetailsService() {
-        //in a real application, instead of using local data,
-        // we will find user details by some other means e.g. from an external system
-
-        val pass1 = "{bcrypt}\$2a\$10\$0H0DahrWqrwOc/7wklY1EeMJQyB8XVel6PZ6.WilQQZLxKdy7675q"
-        val pass2 = "{bcrypt}\$2a\$10\$QzwRfpohuJhOCG0SV9acm.QSz3WYSFWJh9CYbOEOoYhDcwuSMvXue"
-        users.add(UserObject("erin", pass1, "read"))
-        users.add(UserObject("mike", pass2, "read"))
-    }
-
-    private fun toUserDetails(userObject: UserObject): UserDetails {
-        Logger.getLogger("Password").warning( passwordEncoder().encode("234"))
+    private fun toUserDetails(userObject: UserModel): UserDetails {
         return User
-                .withUsername(userObject.name)
+                .withUsername(userObject.username)
                 .password(userObject.password)
-                .roles(userObject.role)
+                .roles(userObject.roles)
                 .build()
     }
 
@@ -54,17 +39,4 @@ class AuthenticationConfiguration: UserDetailsService {
     fun passwordEncoder(): PasswordEncoder {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder()
     }
-
-
-//    @Bean
-//    internal fun userDetailsService(): UserDetailsService {
-//        val greg = User.withDefaultPasswordEncoder()
-//                .username("erin")
-//                .password("123")
-//                .roles("read")
-//                .build()
-//        return InMemoryUserDetailsManager(greg)
-//    }
 }
-
-class UserObject(val name: String, val password: String, val role: String)
