@@ -1,21 +1,32 @@
-version: '3'
+version: '3.3'
 
 services:
-  docker-mysql:
+  lingua-mysql:
+    restart: always
     image: mysql:latest
+    ports:
+      - 3306
     environment:
-    - MYSQL_ROOT_PASSWORD=root
-    - MYSQL_DATABASE=test
-    - MYSQL_PASSWORD=root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lingua_start_user
+      MYSQL_USER: lingua_start_user
+      MYSQL_PASSWORD: root
+    volumes:
+    - jdbc-with-docker-mysql-data:/var/lib/mysql
   spring-boot-jpa-docker-webapp:
-    image: gradle-springboot
-    depends_on:
-    - docker-mysql
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
     - 8080:8080
     environment:
-    - DATABASE_HOST=docker-mysql
-    - DATABASE_USER=root
-    - DATABASE_PASSWORD=gBkYntkZ7P8Zs59a
-    - DATABASE_NAME=lingua_start_db
-    - DATABASE_PORT=3306
+      DATABASE_HOST: lingua-mysql
+      DATABASE_USER: lingua_start_user
+      DATABASE_PASSWORD: root
+      DATABASE_NAME: lingua_start_db
+      DATABASE_PORT: 3306
+    depends_on:
+    - lingua-mysql
+volumes:
+  jdbc-with-docker-mysql-data:
