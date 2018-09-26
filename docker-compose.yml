@@ -3,17 +3,15 @@ version: '3.3'
 services:
   lingua-mysql:
     restart: always
-    image: mysql:latest
+    image: mysql:5.7
     ports:
-      - 3306
+    - 3306
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: lingua_start_user
+      MYSQL_DATABASE: lingua_start_db
       MYSQL_USER: lingua_start_user
       MYSQL_PASSWORD: root
-    volumes:
-    - jdbc-with-docker-mysql-data:/var/lib/mysql
-  spring-boot-jpa-docker-webapp:
+  lingua-app:
     restart: always
     build:
       context: ./
@@ -28,5 +26,3 @@ services:
       DATABASE_PORT: 3306
     depends_on:
     - lingua-mysql
-volumes:
-  jdbc-with-docker-mysql-data:
