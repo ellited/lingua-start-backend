@@ -11,6 +11,8 @@ services:
       MYSQL_DATABASE: lingua_start_db
       MYSQL_USER: lingua_start_user
       MYSQL_PASSWORD: root
+    volumes:
+      - ./../lingua-mysql-volume:/var/lib/mysql
   lingua-app:
     restart: always
     build:
@@ -24,5 +26,7 @@ services:
       DATABASE_PASSWORD: root
       DATABASE_NAME: lingua_start_db
       DATABASE_PORT: 3306
+    volumes:
+      - ./../lingua-start-backend-app:/filestorage
     depends_on:
     - lingua-mysql
