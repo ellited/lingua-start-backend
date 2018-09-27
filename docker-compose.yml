@@ -28,10 +28,10 @@ services:
       DATABASE_NAME: lingua_start_db
       DATABASE_PORT: 3306
     volumes:
-      - lingua-app-volume:/filestorage
+      - filestorage:/filestorage
     depends_on:
     - lingua-mysql
 
 volumes:
-  lingua-app-volume:
+  filestorage:
   lingua-mysql-volume:

@@ -13,7 +13,7 @@ import java.util.*
 @Service
 class FileStorageService: FileStorage {
 
-    val rootLocation = Paths.get("filestorage")
+    val rootLocation = Paths.get("/filestorage")
 
     override fun init(){
         if (!Files.exists(rootLocation)) {
