@@ -12,6 +12,7 @@ services:
       MYSQL_USER: lingua_start_user
       MYSQL_PASSWORD: root
     volumes:
+      - ./sql:/docker-entrypoint-initdb.d
       - lingua-mysql-volume:/var/lib/mysql
   lingua-app:
     restart: always
