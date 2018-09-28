@@ -1,3 +1,12 @@
+### Before running any Compose services, make sure you have an .env file 
+# inside your current folder and that it has been populated with the following content:
+#   mysql_root_password=<MYSQL_ROOT_PASSWORD>
+# 
+#   mysql_database_name=lingua-mysql
+#   mysql_database_user=<DB_USER_NAME>
+#   mysql_database_password=<DB_PASSWORD>
+
+
 version: '3.3'
 
 services:
@@ -7,13 +16,14 @@ services:
     ports:
     - 3306
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: lingua_start_db
-      MYSQL_USER: lingua_start_user
-      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${mysql_root_password}
+      MYSQL_DATABASE: ${mysql_database_name}
+      MYSQL_USER: ${mysql_database_user}
+      MYSQL_PASSWORD: ${mysql_database_password}
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
       - lingua-mysql-volume:/var/lib/mysql
+
   lingua-app:
     restart: always
     build:
@@ -23,10 +33,11 @@ services:
     - 8080:8080
     environment:
       DATABASE_HOST: lingua-mysql
-      DATABASE_USER: lingua_start_user
-      DATABASE_PASSWORD: root
-      DATABASE_NAME: lingua_start_db
+      DATABASE_NAME: ${mysql_database_name}
+      DATABASE_USER: ${mysql_database_user}
+      DATABASE_PASSWORD: ${mysql_database_password}
       DATABASE_PORT: 3306
+      JAVA_OPTIONS: -Xmx512m
     volumes:
       - filestorage:/filestorage
     depends_on:
