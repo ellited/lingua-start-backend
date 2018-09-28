@@ -15,7 +15,7 @@ spring:
 security:
   oauth2:
     client:
-      client-id: foo
-      client-secret: bar
+      client-id: ${OAUTH2_CLIENT_ID}
+      client-secret: ${OAUTH2_CLIENT_SECRET}
     authorization:
       checkTokenAccess: isAuthenticated()

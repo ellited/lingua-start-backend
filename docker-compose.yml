@@ -5,6 +5,8 @@
 #   mysql_database_name=lingua-mysql
 #   mysql_database_user=<DB_USER_NAME>
 #   mysql_database_password=<DB_PASSWORD>
+#   oauth_client_id=<OAUTH2_CLIENT_ID>
+#   oauth_client_secret=<OAUTH2_CLIENT_SECRET>
 
 
 version: '3.3'
@@ -36,6 +38,8 @@ services:
       DATABASE_NAME: ${mysql_database_name}
       DATABASE_USER: ${mysql_database_user}
       DATABASE_PASSWORD: ${mysql_database_password}
+      OAUTH2_CLIENT_ID: ${oauth_client_id}
+      OAUTH2_CLIENT_SECRET: ${oauth_client_secret}
       DATABASE_PORT: 3306
       JAVA_OPTIONS: -Xmx512m
     volumes:
