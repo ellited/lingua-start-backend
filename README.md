@@ -1,4 +1,14 @@
-# lingua-start-backend
+# Backend-side to Lingua Start mobile application
+
+Development environment:  
+**JDK**: 1.8  
+**Language**: Kotlin 1.2  
+**Database**: MySQL 5.7  
+**Security**: OAuth 2  
+**Deployment**: Docker Compose  
+**Dependecies**:  
+ - Springboot 2
+ - Spring security 5 
 
 Install JDK 1.8:
 https://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html
