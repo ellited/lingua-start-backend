@@ -12,10 +12,21 @@
  
 ## Deployment by Docker Compose ##
 **0. Install Docker Compose**  
-**1. Check installation of JDK 1.8, [install JDK 8](https://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html) if not installed** 
+**1. Clone repository**
+**2. Go to repository folder**
+**3. Check installation of JDK 1.8, [install JDK 8](https://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html) if not installed** 
 ```
 java -version
 ```
+install JDK 1.8 (ubuntu 18.04):
+sudo apt install openjdk-8-jdk
+
+**4. Build Gradle file**
+./gradlew build
+
+**5. add .env file**
+
+**6. docker-compose up**
 
  
 ## Manual deployment
